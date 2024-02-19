@@ -57,7 +57,12 @@ jobs:
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          
+
+      - name: build script
+        env:
+          ECR_REPOSITORY: ${{ secrets.AWS_ECR_REPOSITORY_NAME }}
+          IMAGE_TAG: 1.0
+        run: |
           mkdir scripts
           touch scripts/deploy.sh
           echo "sudo yum update -y | sudo yum install docker -y | sudo service docker start | sudo usermod -aG docker ec2-user" >> scripts/deploy.sh
@@ -69,10 +74,6 @@ jobs:
           echo "docker run -d -p 8080:8080 \$ECR_REPO_URI:\$DOCKER_TAG" >> scripts/deploy.sh
 
       - name: upload to S3
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          IMAGE_TAG: 1.0
         run: |
           zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
           aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://seongha-test-bucket
