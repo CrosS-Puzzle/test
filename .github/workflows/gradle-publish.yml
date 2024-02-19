@@ -27,11 +27,6 @@ jobs:
           java-version: '17'
           distribution: 'corretto'
 
-      - name: make application.yml
-        run: |
-          mkdir ./src/main/resources # resources 폴더 생성
-          echo "${{ secrets.APPLICATION_YML }}" > ./src/main/resources/application.yml
-
       - run: |
           cat ./src/main/resources/application.yml 
 
