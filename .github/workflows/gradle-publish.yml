@@ -74,6 +74,8 @@ jobs:
           echo "docker run -d -p 8080:8080 \$ECR_REPO_URI:\$DOCKER_TAG" >> scripts/deploy.sh
 
       - name: upload to S3
+        env:
+          IMAGE_TAG: 1
         run: |
           zip -r deploy-$IMAGE_TAG.zip ./scripts appspec.yml
           aws s3 cp --region ap-northeast-2 --acl private ./deploy-$IMAGE_TAG.zip s3://seongha-test-bucket
