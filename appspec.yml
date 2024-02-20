@@ -11,6 +11,7 @@ permissions:
     pattern: "**"
     owner: root
     group: root
+    mode: 755
 
 hooks:
   ApplicationStart:
