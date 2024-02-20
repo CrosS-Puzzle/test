@@ -74,8 +74,7 @@ jobs:
           echo "export AWS_ACCESS_KEY_ID=\"${{ secrets.AWS_ACCESS_KEY_ID }}\"" >> scripts/deploy.sh 
           echo "export AWS_SECRET_ACCESS_KEY=\"${{ secrets.AWS_SECRET_ACCESS_KEY }}\"" >> scripts/deploy.sh 
           echo "export AWS_DEFAULT_REGION=\"${{ secrets.AWS_DEFAULT_REGION }}\"" >> scripts/deploy.sh 
-          echo "aws ecr get-login-password --region \$AWS_DEFAULT_REGION" >> scripts/deploy.sh 
-          echo "docker login --username AWS --password-stdin \$ECR_REPO_URI" >> scripts/deploy.sh 
+          echo "aws ecr get-login-password --region \$AWS_DEFAULT_REGION | docker login --username AWS --password-stdin \$ECR_REPO_URI" >> scripts/deploy.sh 
           echo "docker pull \$ECR_REPO_URI:\$DOCKER_TAG" >> scripts/deploy.sh
           echo "docker run -d -p 8080:8080 \$ECR_REPO_URI:\$DOCKER_TAG" >> scripts/deploy.sh
 
