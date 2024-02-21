@@ -91,7 +91,7 @@ jobs:
         env:
           IMAGE_TAG: 1.0
         run: |
-          aws deploy create-deployment --application-name test-deploy \
+          aws deploy create-deployment --application-name test1 \
                          --deployment-config-name CodeDeployDefault.OneAtATime \
-                         --deployment-group-name testGroup \
+                         --deployment-group-name test1 \
                          --s3-location bucket=seongha-test-bucket,bundleType=zip,key=deploy-$IMAGE_TAG.zip
